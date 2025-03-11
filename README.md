@@ -15,3 +15,14 @@ A simple task management web app built with Django, TailwindCSS, and deployed on
 - TailwindCSS (Frontend)
 - PostgreSQL (Production)
 - Render (Hosting)
+
+## Setup Instructions
+```bash
+git clone https://github.com/Bulwark-Inc/taskManager.git
+cd taskManager
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
