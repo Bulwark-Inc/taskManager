@@ -6,7 +6,7 @@
     <p class="mt-4 text-lg">Simple. Fast. Effective.</p>
     {% if user.is_authenticated %}
         <div class="mt-6">
-            <a href="{% url 'profile' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Profile</a>
+            <a href="{% url 'dashboard' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Your Tasks</a>
         </div>
     {% else %}
         <div class="mt-6">

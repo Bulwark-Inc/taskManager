@@ -13,9 +13,9 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'due_date', 'completed']
         
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Task Title'}),
-            'description': forms.Textarea(attrs={'class': 'form-textarea', 'placeholder': 'Task Description'}),
-            'completed': forms.CheckboxInput(attrs={'class': 'form-checkbox'}),
+            'title': forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300'}),
+            'description': forms.Textarea(attrs={'class': 'w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300'}),
+            'completed': forms.CheckboxInput(attrs={'class': 'h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300'}),
         }
 
 
