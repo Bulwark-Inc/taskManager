@@ -21,11 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY', default='your-default-secret-key')
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ['taskmanager-pqvt.onrender.com']
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
@@ -126,10 +122,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC & MEDIA FILES
-STATIC_URL = 'staticfiles/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# URL to serve static files
+STATIC_URL = '/static/'
 
+# Folder where collectstatic will put the files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 # Enable Whitenoise compression
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
