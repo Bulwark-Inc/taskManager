@@ -121,9 +121,17 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC & MEDIA FILES
-STATIC_URL = 'staticfiles/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# URL to serve static files
+STATIC_URL = '/static/'
+
+# Folder where collectstatic will put the files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+# Enable Whitenoise compression
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
