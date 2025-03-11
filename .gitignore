@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Django
+/media
+/staticfiles
+.env
+*.env
+
+# Ignore database files
+*.sqlite3
+*.db
+
+# Node.js
+node_modules/
+theme/dist/
+theme/.next/
+theme/package-lock.json
+
+# Tailwind CSS build artifacts
+!theme/static_src/css/input.css  # EXCEPTION: Keep this file in Git 
+
+# VS Code settings
+.vscode/
+config.json
+
+# Ignore log and temporary files
+*.log
+*.tmp
+*.bak
+
+# Python virtual environment
+venv/
+tenv/
+
+# Ignore package manager lock files (if using both npm & pip)
+package-lock.json
+poetry.lock
+pip-log.txt

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center py-20">
+    <h1 class="text-4xl font-bold">Organize your life with TaskManager</h1>
+    <p class="mt-4 text-lg">Simple. Fast. Effective.</p>
+    {% if user.is_authenticated %}
+        <div class="mt-6">
+            <a href="{% url 'profile' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Profile</a>
+        </div>
+    {% else %}
+        <div class="mt-6">
+            <a href="{% url 'login' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Login</a>
+            <a href="{% url 'register' %}" class="bg-green-500 text-white px-4 py-2 rounded">Register</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
