@@ -1,64 +1,109 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block title %}Register - Task Manager{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4">
-  <div class="max-w-md w-full space-y-8 bg-white p-8 rounded shadow-md">
-    <h2 class="text-center text-3xl font-extrabold text-gray-900">Create Your Account</h2>
+<div class="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 py-12 px-4" data-aos="fade-in">
+  <div class="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl" data-aos="zoom-in" data-aos-delay="200">
 
-    <form method="post" class="mt-8 space-y-6">
+    <h2 class="text-center text-3xl font-extrabold text-gray-900 dark:text-white mb-6">
+      Create Your Account
+    </h2>
+
+    <form method="post" class="space-y-6">
       {% csrf_token %}
       {{ form.non_field_errors }}
 
-      <div class="rounded-md shadow-sm -space-y-px">
+      <div class="space-y-4">
+
         <!-- Username -->
-        <div class="mb-4">
-          {{ form.username.label_tag }}
-          {{ form.username }}
+        <div class="relative">
+          <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            Username
+          </label>
+          <div class="relative">
+            <i data-lucide="user" class="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500"></i>
+            {{ form.username|add_class:"appearance-none pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" }}
+          </div>
           {% if form.username.errors %}
-            <p class="text-red-500 text-sm">{{ form.username.errors }}</p>
+            <p class="text-red-500 text-xs mt-1">{{ form.username.errors }}</p>
           {% endif %}
         </div>
 
         <!-- Email -->
-        <div class="mb-4">
-          {{ form.email.label_tag }}
-          {{ form.email }}
+        <div class="relative">
+          <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            Email
+          </label>
+          <div class="relative">
+            <i data-lucide="mail" class="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500"></i>
+            {{ form.email|add_class:"appearance-none pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" }}
+          </div>
           {% if form.email.errors %}
-            <p class="text-red-500 text-sm">{{ form.email.errors }}</p>
+            <p class="text-red-500 text-xs mt-1">{{ form.email.errors }}</p>
           {% endif %}
         </div>
 
         <!-- Password 1 -->
-        <div class="mb-4">
-          {{ form.password1.label_tag }}
-          {{ form.password1 }}
+        <div class="relative">
+          <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            Password
+          </label>
+          <div class="relative">
+            <i data-lucide="lock" class="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500"></i>
+            {{ form.password1|add_class:"appearance-none pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm password-field" }}
+            <button type="button" class="absolute right-3 top-3.5 text-gray-500 dark:text-gray-400 reveal-password" data-target="{{ form.password1.id_for_label }}">
+              <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+          </div>
           {% if form.password1.errors %}
-            <p class="text-red-500 text-sm">{{ form.password1.errors }}</p>
+            <p class="text-red-500 text-xs mt-1">{{ form.password1.errors }}</p>
           {% endif %}
         </div>
 
         <!-- Password 2 -->
-        <div class="mb-4">
-          {{ form.password2.label_tag }}
-          {{ form.password2 }}
+        <div class="relative">
+          <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+            Confirm Password
+          </label>
+          <div class="relative">
+            <i data-lucide="lock" class="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500"></i>
+            {{ form.password2|add_class:"appearance-none pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm password-field" }}
+            <button type="button" class="absolute right-3 top-3.5 text-gray-500 dark:text-gray-400 reveal-password" data-target="{{ form.password2.id_for_label }}">
+              <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+          </div>
           {% if form.password2.errors %}
-            <p class="text-red-500 text-sm">{{ form.password2.errors }}</p>
+            <p class="text-red-500 text-xs mt-1">{{ form.password2.errors }}</p>
           {% endif %}
         </div>
+
       </div>
 
       <div>
         <button type="submit"
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+          class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+          data-aos="fade-up" data-aos-delay="400">
+          <i data-lucide="user-plus" class="mr-2"></i>
           Sign up
         </button>
       </div>
+
     </form>
 
-    <p class="mt-2 text-center text-sm text-gray-600">
+    <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400" data-aos="fade-up" data-aos-delay="600">
       Already have an account?
-      <a href="{% url 'login' %}" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>
+      <a href="{% url 'login' %}" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-300">
+        Sign in
+      </a>
     </p>
+
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}

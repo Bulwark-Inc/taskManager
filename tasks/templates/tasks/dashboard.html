@@ -1,59 +1,121 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mx-auto py-10">
-    <h2 class="text-2xl font-bold mb-4">Welcome, {{ user.username }}</h2>
+  <div class="container mx-auto py-10">
 
+    <!-- Welcome Message -->
+    <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+      Welcome, {{ user.username }}
+    </h2>
+
+    <!-- Search Bar -->
     <form method="get" class="flex items-center mb-6">
-        <input type="text" name="q" placeholder="Search tasks..."
-               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300">
-        <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-          Search
-        </button> 
+      <input
+        type="text"
+        name="q"
+        placeholder="Search tasks..."
+        class="w-full px-4 py-2 border border-gray-400 dark:border-gray-600 rounded focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100"
+      />
+      <button
+        type="submit"
+        class="ml-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded transition-colors"
+      >
+        Search
+      </button>
     </form>
+
+    <!-- Filter Buttons -->
     <div class="flex space-x-4 mb-4">
-        <a href="{% url 'dashboard' %}" class="px-3 py-2 bg-gray-200 rounded hover:bg-gray-300">All</a>
-        <a href="{% url 'dashboard' %}?filter=active" class="px-3 py-2 bg-yellow-200 rounded hover:bg-yellow-300">Active</a>
-        <a href="{% url 'dashboard' %}?filter=completed" class="px-3 py-2 bg-green-200 rounded hover:bg-green-300">Completed</a>
+      <a
+        href="{% url 'dashboard' %}"
+        class="px-3 py-2 rounded transition-colors bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-400"
+      >
+        All
+      </a>
+      <a
+        href="{% url 'dashboard' %}?filter=active"
+        class="px-3 py-2 rounded transition-colors bg-yellow-200 hover:bg-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-500 text-gray-800 dark:text-gray-400"
+      >
+        Active
+      </a>
+      <a
+        href="{% url 'dashboard' %}?filter=completed"
+        class="px-3 py-2 rounded transition-colors bg-green-200 hover:bg-green-300 dark:bg-green-600 dark:hover:bg-green-500 text-gray-800 dark:text-gray-400"
+      >
+        Completed
+      </a>
     </div>
-      
-      
-    <a href="{% url 'task_create' %}" class="bg-green-500 text-white px-4 py-2 rounded mb-4 inline-block">Add Task</a>
-    
+
+    <!-- Add Task Button -->
+    <a
+      href="{% url 'task_create' %}"
+      class="bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white px-4 py-2 rounded mb-4 inline-block transition-colors"
+    >
+      Add Task
+    </a>
+
+    <!-- Task List -->
     <div class="grid gap-4">
-        {% for task in tasks %}
-        <div class="p-4 bg-white shadow rounded flex justify-between items-center">
-            <div>
-                <h3 class="font-semibold">{{ task.title }}</h3>
-                <p class="text-sm text-gray-600">Due: {{ task.due_date }}</p>
-            </div>
-            <span class="inline-block px-2 py-1 text-xs font-semibold rounded 
-            {% if task.completed %}
-                bg-green-100 text-green-700
-            {% else %}
-                bg-yellow-100 text-yellow-700
-            {% endif %}">
-            {% if task.completed %} Completed {% else %} In Progress {% endif %}
-            </span>
-            <div class="flex gap-2">
-                <a href="{% url 'task_edit' task.id %}" class="bg-blue-500 text-white px-3 py-1 rounded">Edit</a>
-                <a href="{% url 'task_delete' task.id %}" class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
-            </div>
+      {% for task in tasks %}
+      <div
+        class="p-4 bg-white dark:bg-gray-800 shadow rounded flex justify-between items-center transition-colors"
+      >
+        <div>
+          <h3 class="font-semibold text-gray-900 dark:text-gray-100">
+            {{ task.title }}
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Due: {{ task.due_date }}
+          </p>
         </div>
-        {% empty %}
-        <p>No tasks found. Add one!</p>
-        {% endfor %}
+
+        <!-- Status Label -->
+        <span
+          class="inline-block px-2 py-1 text-xs font-semibold rounded transition-colors
+          {% if task.completed %}
+            bg-green-100 dark:bg-green-700 text-green-700 dark:text-green-200
+          {% else %}
+            bg-yellow-100 dark:bg-yellow-700 text-yellow-700 dark:text-yellow-200
+          {% endif %}"
+        >
+          {% if task.completed %} Completed {% else %} In Progress {% endif %}
+        </span>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-2">
+          <a
+            href="{% url 'task_edit' task.id %}"
+            class="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white px-3 py-1 rounded transition-colors"
+          >
+            Edit
+          </a>
+          <a
+            href="{% url 'task_delete' task.id %}"
+            class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white px-3 py-1 rounded transition-colors"
+          >
+            Delete
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-gray-700 dark:text-gray-300">No tasks found. Add one!</p>
+      {% endfor %}
     </div>
-</div>
-{% if upcoming_tasks %}
-  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6">
+    
+  </div>
+
+  <!-- Upcoming Tasks Reminder -->
+  {% if upcoming_tasks %}
+  <div
+    class="bg-yellow-100 dark:bg-yellow-700 border-l-4 border-yellow-500 dark:border-yellow-400 text-yellow-700 dark:text-yellow-100 p-4 mb-6 transition-colors"
+  >
     <p class="font-bold">Upcoming Tasks (due within 24 hours):</p>
     <ul class="list-disc list-inside">
       {% for task in upcoming_tasks %}
-        <li>{{ task.title }} - due {{ task.due_date }}</li>
+      <li>{{ task.title }} - due {{ task.due_date }}</li>
       {% endfor %}
     </ul>
   </div>
-{% endif %}
-
+  {% endif %}
+  
 {% endblock %}

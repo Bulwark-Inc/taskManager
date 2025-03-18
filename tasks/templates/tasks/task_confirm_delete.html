@@ -1,22 +1,21 @@
 {% extends "base.html" %}
 
+<!-- Back Nav reset -->
+{% block back_button_link %}"{% url 'dashboard' %}"{% endblock %}
+{% block back_button_text %}Back to dashboard{% endblock %}
+
 {% block content %}
-<a href="{% url 'dashboard' %}" class="inline-flex items-center text-blue-600 hover:text-blue-800">
-  <!-- Left Arrow Icon -->
-  <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-  </svg>
-  Back to Dashboard
-</a>
-<div class="max-w-md mx-auto mt-10">
-  <h1 class="text-xl font-bold mb-4 text-red-600">Confirm Delete</h1>
 
-  <p>Are you sure you want to delete <strong>{{ task.title }}</strong>?</p>
+  <div class="max-w-md mx-auto mt-10">
+    <h1 class="text-xl font-bold mb-4 text-red-600">Confirm Delete</h1>
 
-  <form method="post" class="mt-4 space-x-2">
-    {% csrf_token %}
-    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
-    <a href="{% url 'dashboard' %}" class="text-gray-600">Cancel</a>
-  </form>
-</div>
+    <p>Are you sure you want to delete <strong>{{ task.title }}</strong>?</p>
+
+    <form method="post" class="mt-4 space-x-2">
+      {% csrf_token %}
+      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
+      <a href="{% url 'dashboard' %}" class="text-gray-600">Cancel</a>
+    </form>
+  </div>
+  
 {% endblock %}

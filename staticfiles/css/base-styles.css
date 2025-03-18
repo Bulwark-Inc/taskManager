@@ -1,0 +1,66 @@
+/* Make sure the page content isn't overlapped by a fixed navbar (if you decide to fix it later) */
+/* body { padding-top: 4rem; } */
+
+a {
+    transition: color 0.3s ease;
+}
+
+button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#mobile-menu a,
+#mobile-menu button {
+    display: block;
+    width: 100%;
+}
+
+/* Dark mode improvements */
+.dark .text-gray-800 {
+    color: #f9fafb; /* light gray for dark bg */
+}
+
+.dark .bg-gray-100 {
+    background-color: #1f2937; /* darker bg for dark mode */
+}
+
+/* Optional: footer always at the bottom */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Base styles for glassmorphism (for fallback support if needed) */
+.glass {
+    /* background: rgba(255, 255, 255, 0.2); */
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Smooth animations for transitions */
+.transition-transform {
+    transition: transform 0.3s ease-in-out;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.scale-95 {
+    transform: scale(0.95);
+}
+
+.opacity-0 {
+    opacity: 0;
+}

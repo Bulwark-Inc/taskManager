@@ -1,57 +1,144 @@
 {% extends 'base.html' %}
 
+{% block title %}Profile - Task Manager{% endblock %}
+
 {% block content %}
-<form method="post">
-  {% csrf_token %}
+<div class="max-w-2xl mx-auto px-4 py-8" x-data="{ showToast: false }">
 
-  <!-- Username -->
-  <div class="mb-4">
-    <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
-    <input type="text" name="username" id="id_username" value="{{ user_form.username.value }}" 
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+  <!-- Profile Update Section -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-6 mb-8 border border-gray-200 dark:border-gray-700">
+    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+      <i data-lucide="user" class="w-5 h-5 text-purple-600"></i>
+      Edit Profile
+    </h2>
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+
+      <!-- Hidden input to identify the form -->
+      <input type="hidden" name="form_type" value="profile">
+
+      <!-- Username -->
+      <div>
+        <label for="id_username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Username
+        </label>
+        <div class="relative">
+          <input type="text" name="username" id="id_username"
+                 value="{{ user_form.username.value }}"
+                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm pl-10">
+          <i data-lucide="at-sign" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
+        </div>
+        {% if user_form.username.errors %}
+          <p class="text-sm text-red-500 mt-1">
+            {{ user_form.username.errors.0 }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="id_email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Email
+        </label>
+        <div class="relative">
+          <input type="email" name="email" id="id_email"
+                 value="{{ user_form.email.value }}"
+                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm pl-10">
+          <i data-lucide="mail" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
+        </div>
+        {% if user_form.email.errors %}
+          <p class="text-sm text-red-500 mt-1">
+            {{ user_form.email.errors.0 }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Save Changes Button -->
+      <button type="submit" name="profile_form" value="true"
+              class="inline-flex items-center justify-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-md transition ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+        <i data-lucide="save" class="w-4 h-4 mr-2"></i> Save Changes
+      </button>
+    </form>
   </div>
 
-  <!-- Email -->
-  <div class="mb-4">
-    <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
-    <input type="email" name="email" id="id_email" value="{{ user_form.email.value }}" 
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+  <!-- Password Change Section -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+      <i data-lucide="lock" class="w-5 h-5 text-purple-600"></i>
+      Change Password
+    </h2>
+
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+
+      <!-- Hidden input to identify the form -->
+      <input type="hidden" name="form_type" value="password">
+
+      <!-- Old Password -->
+      <div x-data="{ show: false }">
+        <label for="id_old_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Old Password
+        </label>
+        <div class="relative">
+          <input :type="show ? 'text' : 'password'" name="old_password" id="id_old_password"
+                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm pr-10 pl-3">
+          <button type="button" @click="show = !show" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
+            <i :data-lucide="show ? 'eye' : 'eye-off'" class="w-4 h-4"></i>
+          </button>
+        </div>
+        {% if password_form.old_password.errors %}
+          <p class="text-sm text-red-500 mt-1">
+            {{ password_form.old_password.errors.0 }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- New Password -->
+      <div x-data="{ show: false }">
+        <label for="id_new_password1" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          New Password
+        </label>
+        <div class="relative">
+          <input :type="show ? 'text' : 'password'" name="new_password1" id="id_new_password1"
+                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm pr-10 pl-3">
+          <button type="button" @click="show = !show" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
+            <i :data-lucide="show ? 'eye' : 'eye-off'" class="w-4 h-4"></i>
+          </button>
+        </div>
+        {% if password_form.new_password1.errors %}
+          <p class="text-sm text-red-500 mt-1">
+            {{ password_form.new_password1.errors.0 }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Confirm New Password -->
+      <div x-data="{ show: false }">
+        <label for="id_new_password2" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Confirm New Password
+        </label>
+        <div class="relative">
+          <input :type="show ? 'text' : 'password'" name="new_password2" id="id_new_password2"
+                 class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm pr-10 pl-3">
+          <button type="button" @click="show = !show" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none">
+            <i :data-lucide="show ? 'eye' : 'eye-off'" class="w-4 h-4"></i>
+          </button>
+        </div>
+        {% if password_form.new_password2.errors %}
+          <p class="text-sm text-red-500 mt-1">
+            {{ password_form.new_password2.errors.0 }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Change Password Button -->
+      <button type="submit" name="password_form" value="true"
+              class="inline-flex items-center justify-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-md transition ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+        <i data-lucide="key" class="w-4 h-4 mr-2"></i> Change Password
+      </button>
+    </form>
   </div>
 
-  <!-- Submit Button -->
-  <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-    Save Changes
-  </button>
-</form>
-
-<form method="post">
-  {% csrf_token %}
-
-  <!-- Old Password -->
-  <div class="mb-4">
-    <label for="id_old_password" class="block text-sm font-medium text-gray-700">Old Password</label>
-    <input type="password" name="old_password" id="id_old_password" 
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-  </div>
-
-  <!-- New Password -->
-  <div class="mb-4">
-    <label for="id_new_password1" class="block text-sm font-medium text-gray-700">New Password</label>
-    <input type="password" name="new_password1" id="id_new_password1" 
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-  </div>
-
-  <!-- Confirm New Password -->
-  <div class="mb-4">
-    <label for="id_new_password2" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
-    <input type="password" name="new_password2" id="id_new_password2" 
-           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-  </div>
-
-  <!-- Submit Button -->
-  <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-    Change Password
-  </button>
-</form>
-
+</div>
 {% endblock %}

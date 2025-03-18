@@ -1,18 +1,85 @@
 {% extends 'base.html' %}
 
+{% block title %}Home - Task Manager{% endblock %}
+
+<!-- Back Nav reset -->
+{% block back_button_link %}{% endblock %}
+{% block hide_svg %}{% endblock %}
+{% block back_button_text %}{% endblock %}
+
 {% block content %}
-<div class="text-center py-20">
-    <h1 class="text-4xl font-bold">Organize your life with TaskManager</h1>
-    <p class="mt-4 text-lg">Simple. Fast. Effective.</p>
+<div class="flex flex-col items-center justify-center min-h-[80vh] px-4 text-center 
+    bg-gradient-to-b 
+    from-purple-100/30 to-purple-50/20 
+    dark:from-purple-950/40 dark:to-purple-900/30 
+    rounded-xl shadow-lg backdrop-blur-lg 
+    border border-purple-300/30 dark:border-purple-100/10 
+    mx-auto max-w-4xl py-12 transition-all duration-300">
+
+    <!-- Heading with fade-down animation -->
+    <h1 
+        class="text-4xl sm:text-5xl md:text-6xl font-extrabold 
+        text-purple-800 dark:text-purple-400 
+        leading-tight drop-shadow-lg transition-colors duration-300"
+        data-aos="fade-down"
+    >
+        Organize Your <span class="text-yellow-500 dark:text-yellow-400">Tasks</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p 
+        class="mt-6 text-lg sm:text-xl md:text-2xl 
+        text-gray-700 dark:text-gray-300 
+        max-w-2xl transition-colors duration-300"
+        data-aos="fade-up"
+        data-aos-delay="200"
+    >
+        Boost your productivity with <span class="font-semibold text-purple-700 dark:text-purple-400">TaskManager</span>. Plan, organize, and stay focused.
+    </p>
+
     {% if user.is_authenticated %}
-        <div class="mt-6">
-            <a href="{% url 'dashboard' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Your Tasks</a>
+        <!-- Dashboard Access -->
+        <div class="mt-8 space-x-4 flex items-center justify-center" data-aos="zoom-in" data-aos-delay="400">
+            <a href="{% url 'dashboard' %}" 
+               class="inline-flex items-center justify-center gap-2 
+               bg-purple-600 hover:bg-purple-700 
+               text-white px-6 py-3 rounded-2xl shadow-md backdrop-blur-md 
+               transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 
+               focus:outline-none focus:ring-4 focus:ring-yellow-400/50 dark:focus:ring-yellow-400/30">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Go to Dashboard
+            </a>
         </div>
     {% else %}
-        <div class="mt-6">
-            <a href="{% url 'login' %}" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Login</a>
-            <a href="{% url 'register' %}" class="bg-green-500 text-white px-4 py-2 rounded">Register</a>
+        <!-- Call to Action Buttons -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center" data-aos="fade-up" data-aos-delay="400">
+            <a href="{% url 'login' %}" 
+               class="inline-flex items-center justify-center gap-2 
+               bg-purple-600 hover:bg-purple-700 
+               text-white px-6 py-3 rounded-2xl shadow-md backdrop-blur-md 
+               transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 
+               focus:outline-none focus:ring-4 focus:ring-yellow-400/50 dark:focus:ring-yellow-400/30">
+                <i data-lucide="log-in" class="w-5 h-5"></i>
+                Login
+            </a>
+            <a href="{% url 'register' %}" 
+               class="inline-flex items-center justify-center gap-2 
+               bg-yellow-500 hover:bg-yellow-600 
+               text-white px-6 py-3 rounded-2xl shadow-md backdrop-blur-md 
+               transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 
+               focus:outline-none focus:ring-4 focus:ring-purple-400/50 dark:focus:ring-purple-400/30">
+                <i data-lucide="user-plus" class="w-5 h-5"></i>
+                Register
+            </a>
         </div>
     {% endif %}
+
+    <!-- Illustration or Icon Section -->
+    <div class="mt-12" data-aos="fade-up" data-aos-delay="600">
+        <i data-lucide="clipboard-list" class="w-24 h-24 
+        text-purple-300 dark:text-purple-600 opacity-80 
+        transition-colors duration-300"></i>
+    </div>
+
 </div>
 {% endblock %}

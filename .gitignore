@@ -1,45 +1,43 @@
-# Python
-__pycache__/
-*.py[cod]
-*.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
+# Virtual environment
+tenv/
+venv/
 
-# Django
-/media
-/staticfiles
-.env
-*.env
+# Media files (user uploads)
+media/
 
-# Ignore database files
+# SQLite database (local dev DB)
+db.sqlite3
 *.sqlite3
 *.db
 
-# Node.js
-node_modules/
-theme/dist/
-theme/.next/
-theme/package-lock.json
+# Secrets
+.env
 
-# Tailwind CSS build artifacts
-!theme/static_src/css/input.css  # EXCEPTION: Keep this file in Git 
+# Python artifacts
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # VS Code settings
 .vscode/
 config.json
 
-# Ignore log and temporary files
-*.log
-*.tmp
-*.bak
-
-# Python virtual environment
-venv/
-tenv/
-
 # Ignore package manager lock files (if using both npm & pip)
 package-lock.json
 poetry.lock
 pip-log.txt
+
+# Ignore node dependencies
+node_modules/
+
+# Ignore source files not needed in production
+static_src/
+
+# Ignore build tool configs (optional)
+package-lock.json
+package.json
+postcss.config.js
+tailwind.config.js

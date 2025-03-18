@@ -1,12 +1,12 @@
 from . import views
 from django.urls import path
+from .forms import CustomLoginForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
-from .forms import CustomLoginForm
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('register/', views.register, name='register'),
+    path('', views.home_view, name='home'),
+    path('register/', views.register_view, name='register'),
     
     # Login / Logout route
     path(
@@ -20,13 +20,13 @@ urlpatterns = [
 
     # Password reset route
     path('password-reset/', 
-         auth_views.PasswordResetView.as_view(
-             template_name='registration/password_reset.html',
-             email_template_name='registration/password_reset_email.html',
-             subject_template_name='registration/password_reset_subject.txt',
-             success_url='done/'
-         ), 
-         name='password_reset'),
+        auth_views.PasswordResetView.as_view(
+            template_name='registration/password_reset.html',
+            email_template_name='registration/password_reset_email.txt',  # HTML email
+            subject_template_name='registration/password_reset_subject.txt',
+            success_url='done/'
+        ), 
+        name='password_reset'),
          
     path('password-reset/done/', 
          auth_views.PasswordResetDoneView.as_view(
@@ -46,11 +46,11 @@ urlpatterns = [
          ), 
          name='password_reset_complete'),
 
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('tasks/add/', views.task_create, name='task_create'),
-    path('tasks/<int:pk>/edit/', views.task_edit, name='task_edit'),
-    path('tasks/<int:pk>/delete/', views.task_delete, name='task_delete'),
-    path('profile/', views.profile, name='profile'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('tasks/add/', views.task_create_view, name='task_create'),
+    path('tasks/<int:pk>/edit/', views.task_edit_view, name='task_edit'),
+    path('tasks/<int:pk>/delete/', views.task_delete_view, name='task_delete'),
+    path('profile/', views.profile_view, name='profile'),
 ]
 
 
