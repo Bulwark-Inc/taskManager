@@ -1,91 +1,113 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Task Manager{% endblock %}</title>
-    {% load static %}
-
-    <!-- Lucide Icons -->
-    {% comment %} <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script> {% endcomment %}
-    <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
-    <!-- AOS CSS -->
-    <link rel="stylesheet" href="{% static 'css/dist/aos.css' %}">
-    <!-- Custom Base Styles -->
-    <link rel="stylesheet" href="{% static 'css/base-styles.css' %}">
-
-    {% block styles %}{% endblock %}
-</head>
-
-<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
-
-    <!-- Nav links -->
-    {% include 'components/_nav.html' %}
-
-    <!-- Main Content -->
-    <main class="flex-grow pt-24 md:pt-24 lg:pt-20 p-6 md:p-8 lg:p-8">
-
-        <!-- Back Navigation -->
-        <a href={% block back_button_link %}"{% url 'home' %}"{% endblock %} class="inline-flex items-center text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 font-medium mb-6">
-            <!-- Left Arrow Icon -->
-            {% block hide_svg %}
-            <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            {% endblock %}
-            {% block back_button_text %}Back Home{% endblock %}
-        </a>
-        
-        {% block content %}{% endblock %}
-
-        <!-- Success Toast -->
-        <div x-data="{ showToast: false, toastMessage: '' }">
-            {% if messages %}
-                {% for message in messages %}
-                    <div
-                        x-init="
-                            toastMessage = '{{ message|escapejs }}';
-                            showToast = true;
-                            setTimeout(() => showToast = false, 4000);
-                        "
-                        x-show="showToast"
-                        x-transition
-                        class="fixed top-5 left-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 flex items-center space-x-2"
-                    >
-                        <i data-lucide="check-circle" class="w-5 h-5"></i>
-                        <span x-text="toastMessage"></span>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        
-    </main>
+    <head>
+        {% load static %}
     
-    <!-- Footer -->
-    {% include 'components/_footer.html' %}
-
-    <!-- lucide Icons -->
-    <script src="{% static 'js/lucide.min.js' %}" defer></script>  
-    <!-- alpine module -->
-    <script type="module" src="{% static 'js/alpine.min.js' %}" defer></script>
-    <!-- aos module -->
-    <script src="{% static 'js/aos.js' %}" defer></script>  
-    <!-- custom js -->
-    <script src="{% static 'js/base_scripts.js' %}" defer></script>
+        <!-- Meta Info -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Lucide Icon Definitions -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2l4 -4"/></symbol>
-        <symbol id="user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-3-3.85"/><path d="M4 21v-2a4 4 0 0 1 3-3.85"/><circle cx="12" cy="7" r="4"/></symbol>
-        <symbol id="user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-3-3.85"/><path d="M8 21v-2a4 4 0 0 1 3-3.85"/><circle cx="12" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></symbol>
-        <symbol id="log-in" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></symbol>
-        <symbol id="log-out" viewBox="0 0 24 24"><path d="M9 21v-6h12"/><path d="M16 17l5-5-5-5"/></symbol>
-        <symbol id="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
-        <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M16.95 16.95l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M16.95 7.05l1.42-1.42"/></symbol>
-        <symbol id="menu" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
-    </svg>
+        <!-- Primary Meta Tags -->
+        <title>{% block title %}Task Manager{% endblock %}</title>
+        <meta name="title" content="Task Manager - Organize & Optimize Your Workflow">
+        <meta name="description" content="Effortlessly manage your tasks and boost productivity with Task Manager. Clean design, powerful features, and seamless user experience.">
+    
+        {% comment %} <!-- Favicons -->
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+        <link rel="manifest" href="{% static 'manifest.json' %}"> {% endcomment %}
+    
+        {% comment %} <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://your-domain.com/">
+        <meta property="twitter:title" content="Task Manager - Organize & Optimize Your Workflow">
+        <meta property="twitter:description" content="Effortlessly manage your tasks and boost productivity with Task Manager.">
+        <meta property="twitter:image" content="https://your-domain.com/static/images/twitter-image.png"> {% endcomment %}
+    
+        <!-- Theme Color -->
+        <meta name="theme-color" content="#6B21A8">
+    
+        <!-- Tailwind stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+        <!-- AOS stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/dist/aos.css' %}">
+        <!-- Custom Base stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/base-styles.css' %}">
+    
+        {% block styles %}{% endblock %}
+    
+    </head>
+    
+    <body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
 
-    {% block scripts %}{% endblock %}
+        <!-- Nav links -->
+        {% include 'components/_nav.html' %}
+
+        <!-- Main Content -->
+        <main class="flex-grow pt-24 md:pt-24 lg:pt-20 p-6 md:p-8 lg:p-8">
+
+            <!-- Back Navigation -->
+            <a href={% block back_button_link %}"{% url 'home' %}"{% endblock %} class="inline-flex items-center text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-200 font-medium mb-6">
+                <!-- Left Arrow Icon -->
+                {% block hide_svg %}
+                <svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                {% endblock %}
+                {% block back_button_text %}Back Home{% endblock %}
+            </a>
+            
+            {% block content %}{% endblock %}
+
+            <!-- Success Toast -->
+            <div x-data="{ showToast: false, toastMessage: '' }">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div
+                            x-init="
+                                toastMessage = '{{ message|escapejs }}';
+                                showToast = true;
+                                setTimeout(() => showToast = false, 4000);
+                            "
+                            x-show="showToast"
+                            x-transition
+                            class="fixed top-5 left-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 flex items-center space-x-2"
+                        >
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span x-text="toastMessage"></span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            
+        </main>
+        
+        <!-- Footer -->
+        {% include 'components/_footer.html' %}
+
+        <!-- lucide Icons -->
+        <script src="{% static 'js/lucide.min.js' %}" defer></script>  
+        <!-- alpine module -->
+        <script type="module" src="{% static 'js/alpine.min.js' %}" defer></script>
+        <!-- aos module -->
+        <script src="{% static 'js/aos.js' %}" defer></script>  
+        <!-- custom js -->
+        <script src="{% static 'js/base_scripts.js' %}" defer></script>
+        
+        <!-- Lucide Icon Definitions -->
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2l4 -4"/></symbol>
+            <symbol id="user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-3-3.85"/><path d="M4 21v-2a4 4 0 0 1 3-3.85"/><circle cx="12" cy="7" r="4"/></symbol>
+            <symbol id="user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-3-3.85"/><path d="M8 21v-2a4 4 0 0 1 3-3.85"/><circle cx="12" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></symbol>
+            <symbol id="log-in" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></symbol>
+            <symbol id="log-out" viewBox="0 0 24 24"><path d="M9 21v-6h12"/><path d="M16 17l5-5-5-5"/></symbol>
+            <symbol id="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
+            <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M16.95 16.95l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M16.95 7.05l1.42-1.42"/></symbol>
+            <symbol id="menu" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></symbol>
+        </svg>
+
+        {% block scripts %}{% endblock %}
 
     </body>
+
 </html>
